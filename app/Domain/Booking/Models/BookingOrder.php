@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Order\Models;
+namespace App\Domain\Booking\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
