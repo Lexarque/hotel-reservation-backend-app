@@ -6,15 +6,22 @@ use App\Shareds\Paginator;
 use App\Domain\HotelRoom\Models\HotelRoom;
 use App\Http\Requests\IndexApplicationRequest;
 
-class HotelRoomIndexApplication 
+class HotelRoomIndexApplication
 {
+    const SORT_BY_COLUMN_NAME = [
+        'room_number',
+        'room_type',
+        'price'
+    ];
+
     public function __construct(private readonly HotelRoom $hotelRoom)
     {
     }
-    
-    public function fetch(IndexApplicationRequest $request) {
+
+    public function fetch(IndexApplicationRequest $request)
+    {
         $order = getValueOrDefault($request->order, ['desc', 'asc'], 'desc');
-        $sort = getValueOrDefault($request->sort, ['room_number'], 'id');
+        $sort = getValueOrDefault($request->sort, self::SORT_BY_COLUMN_NAME, 'id');
 
         $queryData = $this->hotelRoom
             ->select([
@@ -25,10 +32,10 @@ class HotelRoomIndexApplication
             ->when($request->search, function ($query, $search) {
                 return $query
                     ->where('hotel_rooms.room_number', 'like', "%{$search}%")
-                    ->orWhere('hotel_room_types.name', 'like', "%{$search}%");
+                    ->orWhere('hotel_room_types.room_type', 'like', "%{$search}%");
             })
             ->orderBy($sort, $order);
-      
+
         return Paginator::paginate($queryData, $request->page, $request->per_page);
     }
 }
