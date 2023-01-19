@@ -30,8 +30,10 @@ class HotelRoomController extends Controller
      */
     public function index(IndexApplicationRequest $request): Response
     {
+        $dataList = $this->hotelRoomIndexApplication->fetch($request);
+
         $props = [
-            'data' => new HotelRoomIndexCollection($this->hotelRoomIndexApplication->fetch($request))
+            'data' => (new HotelRoomIndexCollection($dataList->items))->additional(['meta' => $dataList->meta])
         ];
     
         return Inertia::render('HotelRoom/Index', $props);
@@ -101,5 +103,19 @@ class HotelRoomController extends Controller
         $this->hotelRoomCrudApplication->delete($id);
 
         return ControllerRedirect::responseSuccess('/hotel-room', "Successfully deleted hotel room number $roomNumber->room_number");
+    }
+
+    /**
+     * Restore a soft deleted record
+     * 
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function restore(int $id): RedirectResponse
+    {
+        $roomNumber = $this->hotelRoomCrudApplication->find($id);
+        $this->hotelRoomCrudApplication->restore($id);
+
+        return ControllerRedirect::responseSuccess('/hotel-room', "Successfully restored hotel room number $roomNumber->room_number data");
     }
 }

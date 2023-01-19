@@ -32,11 +32,7 @@ class HotelRoomCrudApplication
      */
     public function create(HotelRoomCreateRequest $request): void
     {
-        $this->hotelRoomService->createData(
-            [
-                'room_number' => $request->room_number
-            ]
-        );
+        $this->hotelRoomService->createData($request->validated());
     }
 
     /**
@@ -48,12 +44,7 @@ class HotelRoomCrudApplication
      */
     public function update(HotelRoomUpdateRequest $request, int $id): void
     {
-        $this->hotelRoomService->updateData(
-            $this->find($id),
-            [
-                'room_number' => $request->room_number
-            ]
-        );
+        $this->hotelRoomService->updateData($this->find($id), $request->validated());
     }
 
     /**
@@ -65,5 +56,16 @@ class HotelRoomCrudApplication
     public function delete(int $id): void
     {
         $this->hotelRoomService->delete($id);
+    }
+
+    /**
+     * restore a soft deleted hotel room data
+     *
+     * @param int $id
+     * @return void
+     */
+    public function restore(int $id): void
+    {
+        $this->hotelRoomService->restore($id);
     }
 }
