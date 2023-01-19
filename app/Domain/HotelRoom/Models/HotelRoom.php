@@ -22,7 +22,7 @@ class HotelRoom extends Model
     ];
 
     /**
-     * Define an inverse one-to-many relationship
+     * Define an inverse one-to-one relationship
      * 
      * @return BelongsTo
      */
