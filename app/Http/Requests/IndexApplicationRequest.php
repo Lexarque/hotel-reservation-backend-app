@@ -29,6 +29,7 @@ class IndexApplicationRequest extends FormRequest
             'order' => ['nullable', 'in:desc,asc'],
             'page' => ['numeric'],
             'per_page' => ['numeric'],
+            'trashed' => ['boolean']
         ];
     }
 }

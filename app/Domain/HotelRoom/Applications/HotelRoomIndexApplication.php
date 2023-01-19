@@ -18,24 +18,33 @@ class HotelRoomIndexApplication
     {
     }
 
-    public function fetch(IndexApplicationRequest $request)
+    /**
+     * This function is used to fetch the required data
+     * 
+     * @param IndexApplicationRequest $request
+     * @return Paginator
+     */
+    public function fetch(IndexApplicationRequest $request): Paginator
     {
         $order = getValueOrDefault($request->order, ['desc', 'asc'], 'desc');
-        $sort = getValueOrDefault($request->sort, self::SORT_BY_COLUMN_NAME, 'id');
+        $sort = getValueOrDefault($request->sort, self::SORT_BY_COLUMN_NAME, 'hotel_rooms.id');
 
         $queryData = $this->hotelRoom
             ->select([
                 'hotel_rooms.*',
                 'hotel_room_types.*'
             ])
-            ->leftJoin('hotel_room_types', 'hotel_rooms.id', '=', 'hotel_room_types.id')
+            ->leftJoin('hotel_room_types', 'hotel_rooms.room_type_id', '=', 'hotel_room_types.id')
+            ->when($request->trashed == true, function ($query) {
+                return $query->onlyTrashed();
+            })
             ->when($request->search, function ($query, $search) {
                 return $query
                     ->where('hotel_rooms.room_number', 'like', "%{$search}%")
-                    ->orWhere('hotel_room_types.room_type', 'like', "%{$search}%");
+                    ->orWhere('room_type.room_type', 'like', "%{$search}%");
             })
             ->orderBy($sort, $order);
-
+      
         return Paginator::paginate($queryData, $request->page, $request->per_page);
     }
 }
