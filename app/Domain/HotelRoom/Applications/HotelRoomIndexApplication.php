@@ -41,7 +41,7 @@ class HotelRoomIndexApplication
             ->when($request->search, function ($query, $search) {
                 return $query
                     ->where('hotel_rooms.room_number', 'like', "%{$search}%")
-                    ->orWhere('room_type.room_type', 'like', "%{$search}%");
+                    ->orWhere('hotel_room_types.room_type', 'like', "%{$search}%");
             })
             ->orderBy($sort, $order);
       
