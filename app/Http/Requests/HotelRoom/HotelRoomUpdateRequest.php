@@ -24,7 +24,8 @@ class HotelRoomUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'room_number' => 'nullable|string'
+            'room_number' => 'nullable|string',
+            'room_type_id' => 'nullable|integer'
         ];
     }
 }

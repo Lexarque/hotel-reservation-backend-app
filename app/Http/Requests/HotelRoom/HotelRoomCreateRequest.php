@@ -24,7 +24,8 @@ class HotelRoomCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'room_number' => 'required|string'
+            'room_number' => 'required|string',
+            'room_type_id' => 'required|integer'
         ];
     }
 }
