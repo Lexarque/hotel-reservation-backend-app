@@ -24,7 +24,7 @@ class HotelRoomTypeCrudApplication
         return $this->hotelRoomTypeService->findById($id);
     }
 
-    /**
+    /** 
      * create a new hotel room data
      *
      * @param HotelRoomCreateRequest $request
@@ -32,7 +32,7 @@ class HotelRoomTypeCrudApplication
      */
     public function create(HotelRoomTypeCreateRequest $request): void
     {
-        $this->hotelRoomTypeService->createData($request->validated());
+        $this->hotelRoomTypeService->createData($request->validated(), $request->only('photo_images'));
     }
 
     /**
@@ -44,7 +44,7 @@ class HotelRoomTypeCrudApplication
      */
     public function update(HotelRoomTypeUpdateRequest $request, int $id): void
     {
-        $this->hotelRoomTypeService->updateData($this->find($id), $request->validated());
+        $this->hotelRoomTypeService->updateData($this->find($id), $request->validated(), $request->only('photo_images'));
     }
 
     /**

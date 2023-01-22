@@ -26,7 +26,8 @@ class HotelRoomTypeCreateRequest extends FormRequest
         return [
             'room_type' => 'required|string',
             'price' => 'required|integer',
-            'description' => 'required|string'
+            'description' => 'required|string',
+            'photo_images.*' => 'nullable|file|mimes:jpg,jpeg,png|max:2048'
         ];
     }
 }

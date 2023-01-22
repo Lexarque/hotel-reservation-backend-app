@@ -20,4 +20,13 @@ class HotelRoomType extends Model
         'price',
         'description'
     ];
+
+    /**
+     * Define a polymorphic one-to-many relationship
+     * 
+     * @return MorphMany
+     */
+    public function photos() {
+        return $this->morphMany(Photo::class, 'photosable', 'entity_type', 'entity_id');
+    }
 }
