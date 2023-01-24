@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->date('checkin_date');
             $table->date('checkout_date');
-            $table->string('guest_name');
-            $table->foreignId('room_id')->constrained('hotel_rooms');
+            $table->integer('room_count');
+            $table->foreignId('room_type_id')->constrained('hotel_room_types');
             $table->foreignId('user_id')->constrained('users'); 
             $table->string('status', 20)->default('Booked')->comment('Booked | Staying | Checkout');
             $table->timestamps();
