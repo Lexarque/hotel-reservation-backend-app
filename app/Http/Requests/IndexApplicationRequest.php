@@ -24,12 +24,15 @@ class IndexApplicationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'search' => ['nullable', 'regex:/^[a-zA-Z0-9_\s.,\/]+$/i'],
-            'sort' => ['nullable', 'regex:/^[a-zA-Z0-9_]+$/i'],
-            'order' => ['nullable', 'in:desc,asc'],
-            'page' => ['numeric'],
-            'per_page' => ['numeric'],
-            'trashed' => ['boolean']
+            'search' => 'nullable|regex:/^[a-zA-Z0-9_\s.,\/]+$/i',
+            'sort' => 'nullable|regex:/^[a-zA-Z0-9_]+$/i',
+            'order' => 'nullable|in:desc,asc',
+            'page' => 'numeric',
+            'per_page' => 'numeric',
+            'trashed' => 'nullable|boolean',
+            'status' => 'nullable|string',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date'
         ];
     }
 }

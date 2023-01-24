@@ -2,6 +2,7 @@
 
 namespace App\Domain\Booking\Models;
 
+use App\Domain\HotelRoom\Models\HotelRoomType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,19 +20,19 @@ class BookingOrder extends Model
     protected $fillable = [
         'checkin_date',
         'checkout_date',
-        'guest_name',
-        'room_id',
+        'room_count',
+        'room_type_id',
         'user_id',
         'status',
     ];
 
     /**
-     * Define an inverse one-to-many relationship
+     * Define a one-to-one relationship
      *
-     * @return BelongsTo
+     * @return HasMany
      */
-    public function room() {
-        return $this->belongsTo(HotelRoom::class);
+    public function roomType() {
+        return $this->belongsTo(HotelRoomType::class);
     }
 
     /**
